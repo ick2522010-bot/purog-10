@@ -30,6 +30,97 @@
       line-height: 1.75;
     }
 
+    .access-gate[hidden], .not-found[hidden], #site-content[hidden] { display: none !important; }
+
+    .access-gate {
+      display: grid;
+      min-height: 100vh;
+      min-height: 100dvh;
+      padding: 24px;
+      place-items: center;
+      background:
+        radial-gradient(ellipse at 82% 18%, rgb(255 239 186 / 65%) 0 7%, transparent 7.5%),
+        linear-gradient(160deg, #d9eee2, #c1e1dc 55%, #87c2bb);
+    }
+
+    .access-card {
+      width: min(420px, 100%);
+      padding: 36px;
+      border: 1px solid rgb(255 255 255 / 75%);
+      border-radius: 22px;
+      background: rgb(255 255 255 / 94%);
+      box-shadow: var(--shadow);
+      text-align: center;
+    }
+
+    .access-icon { margin: 0 0 8px; font-size: 2rem; }
+    .access-card h1 { margin: 0; color: var(--green-dark); font-size: 1.7rem; }
+    .access-card p { margin: 8px 0 20px; color: var(--muted); font-size: .92rem; }
+
+    .access-form { display: grid; gap: 12px; }
+    .access-form[hidden] { display: none !important; }
+
+    .access-form input {
+      width: 100%;
+      min-height: 50px;
+      padding: 10px 14px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      outline: none;
+      background: var(--white);
+      color: var(--ink);
+      font-size: 1.2rem;
+      letter-spacing: .3em;
+      text-align: center;
+    }
+
+    .access-form input:focus { border-color: #77a18c; box-shadow: 0 0 0 3px rgb(119 161 140 / 16%); }
+
+    .access-form button {
+      min-height: 48px;
+      border: 0;
+      border-radius: 12px;
+      background: var(--green-dark);
+      color: var(--white);
+      cursor: pointer;
+      font-weight: 750;
+    }
+
+    .access-form button:hover { background: var(--green); }
+    .access-errors {
+      display: grid;
+      gap: 5px;
+      margin: 0;
+      padding-left: 1.5em;
+      color: #a33131;
+      font-size: .85rem;
+      text-align: left;
+    }
+
+    .not-found {
+      display: grid;
+      min-height: 100vh;
+      min-height: 100dvh;
+      padding: 32px 20px;
+      place-items: center;
+      background: var(--cream);
+    }
+
+    .not-found-card {
+      width: min(560px, 100%);
+      padding: 34px;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      background: var(--white);
+      box-shadow: var(--shadow);
+    }
+
+    .not-found-code { margin: 0; color: var(--green); font-size: .9rem; font-weight: 800; letter-spacing: .15em; }
+    .not-found h1 { margin: 4px 0 8px; color: var(--green-dark); font-size: 3rem; }
+    .not-found-card > p:not(.not-found-code) { color: var(--muted); }
+    .not-found-card h2 { margin: 22px 0 8px; font-size: 1rem; }
+    .not-found-errors { display: grid; gap: 5px; padding-left: 1.5em; color: #a33131; font-size: .85rem; }
+
     button, input { font: inherit; }
     a { color: inherit; }
 
@@ -329,10 +420,32 @@
     .card-art {
       position: relative;
       display: grid;
-      min-height: 148px;
+      height: 172px;
       overflow: hidden;
       place-items: center;
       isolation: isolate;
+    }
+
+    .card-art img, .dialog-art img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .photo-badge {
+      position: absolute;
+      right: 10px;
+      bottom: 10px;
+      padding: 3px 9px;
+      border: 1px solid rgb(255 255 255 / 55%);
+      border-radius: 999px;
+      background: rgb(25 44 36 / 62%);
+      color: var(--white);
+      font-size: .7rem;
+      font-weight: 700;
+      line-height: 1.5;
     }
 
     .card-art::before, .card-art::after {
@@ -485,7 +598,7 @@
     }
 
     dialog::backdrop { background: rgb(21 39 31 / 56%); backdrop-filter: blur(3px); }
-    .dialog-art { display: grid; min-height: 180px; place-items: center; }
+    .dialog-art { position: relative; height: 230px; overflow: hidden; }
     .dialog-art .emoji { font-size: 5rem; }
     .dialog-content { padding: 22px 26px 26px; }
     .dialog-content h2 { margin: 8px 0; font-size: 1.55rem; }
@@ -527,7 +640,7 @@
       .section-heading { align-items: flex-start; flex-direction: column; gap: 3px; }
       .controls { grid-template-columns: 1fr; }
       .spot-grid { gap: 12px; }
-      .card-art { min-height: 115px; }
+      .card-art { height: 130px; }
       .card-art .emoji { font-size: 3.2rem; }
       .card-body { padding: 13px 13px 15px; }
       .card-body h3 { font-size: 1rem; }
@@ -538,7 +651,7 @@
 
     @media (max-width: 380px) {
       .spot-grid { grid-template-columns: 1fr; }
-      .card-art { min-height: 145px; }
+      .card-art { height: 165px; }
       .card-body p { min-height: 0; }
     }
 
@@ -548,6 +661,40 @@
   </style>
 </head>
 <body>
+  <section class="access-gate" id="access-gate" aria-labelledby="access-title">
+    <div class="access-card">
+      <p class="access-icon" aria-hidden="true">🌿</p>
+      <h1 id="access-title">ふなばし日和</h1>
+      <p>つづきを見るにはパスワードを入力してください。</p>
+      <form class="access-form" id="access-form">
+        <label for="access-password">パスワード</label>
+        <input id="access-password" name="password" type="password" inputmode="numeric" pattern="[0-9]*" autocomplete="off" required autofocus aria-describedby="access-errors">
+        <button type="submit">ホームページを開く</button>
+        <ol class="access-errors" id="access-errors" aria-live="polite"></ol>
+      </form>
+    </div>
+  </section>
+  <section class="not-found" id="not-found" aria-labelledby="not-found-title" hidden>
+    <div class="not-found-card">
+      <p class="not-found-code">ERROR · 404</p>
+      <h1 id="not-found-title">404</h1>
+      <p>パスワードの入力エラーが10回に達したため、このページを表示できません。</p>
+      <form class="access-form" id="not-found-admin-form">
+        <label for="not-found-admin-password">管理者用パスワード</label>
+        <input id="not-found-admin-password" name="admin-password" type="password" autocomplete="off" required aria-describedby="not-found-admin-error">
+        <button type="submit">管理者として確認</button>
+        <p id="not-found-admin-error" class="access-errors" role="alert" aria-live="polite"></p>
+      </form>
+      <form class="access-form" id="not-found-form" hidden>
+        <label for="not-found-password">再度パスワードを入力</label>
+        <input id="not-found-password" name="password" type="password" inputmode="numeric" pattern="[0-9]*" autocomplete="off" required aria-describedby="not-found-errors">
+        <button type="submit">正しいパスワードで再開</button>
+      </form>
+      <h2>入力エラー</h2>
+      <ol class="not-found-errors" id="not-found-errors"></ol>
+    </div>
+  </section>
+  <div id="site-content" hidden>
   <header class="topbar">
     <a class="brand" href="#" aria-label="ふなばし日和 トップ"><span aria-hidden="true">🌿</span>ふなばし日和</a>
     <nav aria-label="メインナビゲーション">
@@ -617,6 +764,7 @@
 
   <footer>
     <p>ふなばし日和 · 千葉県船橋市のおでかけスポット紹介</p>
+    <p>写真: <a href="https://unsplash.com/license" target="_blank" rel="noopener noreferrer">Unsplash License</a> · 各スポットの現地写真ではなくイメージです</p>
   </footer>
 
   <dialog id="spot-dialog" aria-labelledby="dialog-title">
@@ -639,6 +787,7 @@
         category: "nature",
         categoryLabel: "自然・公園",
         emoji: "🌷",
+        image: "images/park.jpg",
         art: "art-park",
         summary: "花や緑、遊具に出会える、家族のおでかけにも人気の公園。",
         description: "四季折々の花や自然の景色を楽しみながら、園内をゆっくり散策できます。遊具や体験施設もあり、子どもから大人まで一日を過ごせるスポットです。開園日や施設の利用情報は公式サイトでご確認ください。",
@@ -649,6 +798,7 @@
         category: "nature",
         categoryLabel: "自然・公園",
         emoji: "🐚",
+        image: "images/seaside.jpg",
         art: "art-sea",
         summary: "東京湾の干潟と空を感じる、海辺の自然スポット。",
         description: "東京湾に面した海辺の公園。潮干狩りのシーズンや、三番瀬の生きもの・景色を楽しみたい日におすすめです。潮の状況や利用期間によって楽しみ方が変わるため、お出かけ前に施設の案内をご確認ください。",
@@ -659,6 +809,7 @@
         category: "culture",
         categoryLabel: "歴史・文化",
         emoji: "⛩️",
+        image: "images/shrine.jpg",
         art: "art-shrine",
         summary: "船橋のまちに根づく、歴史ある神社でひと休み。",
         description: "船橋大神宮の名で親しまれている意富比神社。境内を歩けば、まちの歴史や落ち着いた空気にふれることができます。参拝の作法や祭事については、神社の案内をご確認ください。",
@@ -669,6 +820,7 @@
         category: "leisure",
         categoryLabel: "おでかけ",
         emoji: "🛍️",
+        image: "images/shopping.jpg",
         art: "art-shopping",
         summary: "ショッピングや食事をまとめて楽しめる大型商業施設。",
         description: "たくさんのお店や飲食店が集まり、買い物から食事まで一度に楽しめます。映画やイベントなど、その日の気分に合わせた過ごし方を見つけてみてください。営業時間やアクセスは公式サイトでご確認ください。",
@@ -679,6 +831,7 @@
         category: "leisure",
         categoryLabel: "おでかけ",
         emoji: "🏟️",
+        image: "images/arena.jpg",
         art: "art-arena",
         summary: "スポーツや音楽イベントで盛り上がる、船橋の新しいアリーナ。",
         description: "スポーツの試合やコンサートなど、多彩なイベントが開かれるアリーナです。イベントの開催日には周辺の混雑が予想されます。公演情報、入場方法、交通案内は主催者や施設の公式情報をご確認ください。",
@@ -689,6 +842,7 @@
         category: "food",
         categoryLabel: "食・市場",
         emoji: "🐟",
+        image: "images/market.jpg",
         art: "art-market",
         summary: "船橋の食を支える市場。場内のお店や催しもチェック。",
         description: "船橋の食を支える卸売市場です。市場ならではの活気や食の魅力にふれられます。一般の方向けの営業やイベントは日によって異なる場合があります。見学・利用の前に公式案内をご確認ください。",
@@ -699,6 +853,7 @@
         category: "leisure",
         categoryLabel: "おでかけ",
         emoji: "♨️",
+        image: "images/onsen.jpg",
         art: "art-onsen",
         summary: "お風呂や休憩で、ゆったりリフレッシュしたい日に。",
         description: "お風呂や休憩スペースでゆっくり過ごせる温浴施設です。おでかけや仕事帰りに、ひと息つきたいときにぴったり。営業時間、利用料金、設備は変更されることがあるため、施設の公式案内をご確認ください。",
@@ -709,6 +864,7 @@
         category: "culture",
         categoryLabel: "歴史・文化",
         emoji: "🏺",
+        image: "images/museum.jpg",
         art: "art-museum",
         summary: "展示を通して、船橋の歴史や人々の暮らしを知る。",
         description: "地域の歴史や文化について学べる資料館です。展示を見ながら、今の船橋につながる昔の暮らしやまちの変化を知ることができます。開館日や展示内容は公式案内でご確認ください。",
@@ -719,6 +875,7 @@
         category: "nature",
         categoryLabel: "自然・公園",
         emoji: "🌸",
+        image: "images/river.jpg",
         art: "art-river",
         summary: "川沿いを歩いて季節を感じる、身近な散歩道。",
         description: "海老川沿いに続く、散歩やジョギングに親しまれている道です。春には桜を楽しめる場所としても知られています。歩きやすい靴で、川辺の景色や季節の移り変わりをのんびり楽しんでみてください。",
@@ -729,6 +886,7 @@
         category: "nature",
         categoryLabel: "自然・公園",
         emoji: "🌳",
+        image: "images/garden.jpg",
         art: "art-garden",
         summary: "広々とした緑の中で、散歩やピクニックを楽しめる公園。",
         description: "緑に囲まれて、散歩や休憩を楽しめる公園です。季節の景色を眺めながら、家族や友人とのんびり過ごしたい日におすすめ。公園内の施設や利用案内は船橋市の公式情報をご確認ください。",
@@ -745,7 +903,10 @@
     function renderSpots() {
       grid.innerHTML = spots.map((spot, index) => `
         <article class="spot-card" data-category="${spot.category}" data-search="${spot.name} ${spot.summary} ${spot.categoryLabel}">
-          <div class="card-art ${spot.art}" aria-hidden="true"><span class="emoji">${spot.emoji}</span></div>
+          <div class="card-art ${spot.art}" aria-hidden="true">
+            <img src="${spot.image}" alt="" loading="lazy" decoding="async">
+            <span class="photo-badge">イメージ</span>
+          </div>
           <div class="card-body">
             <div class="card-topline">
               <span class="category-tag">${spot.categoryLabel}</span>
@@ -801,7 +962,7 @@
       if (!spot) return;
 
       document.querySelector("#dialog-art").className = `dialog-art ${spot.art}`;
-      document.querySelector("#dialog-art").innerHTML = `<span class="emoji">${spot.emoji}</span>`;
+      document.querySelector("#dialog-art").innerHTML = `<img src="${spot.image}" alt=""><span class="photo-badge">イメージ</span>`;
       document.querySelector("#dialog-category").textContent = spot.categoryLabel;
       document.querySelector("#dialog-title").textContent = spot.name;
       document.querySelector("#dialog-description").textContent = spot.description;
@@ -815,6 +976,100 @@
     });
 
     renderSpots();
+  </script>
+  </div>
+  <script>
+    const accessForm = document.querySelector("#access-form");
+    const accessGate = document.querySelector("#access-gate");
+    const siteContent = document.querySelector("#site-content");
+    const accessPassword = document.querySelector("#access-password");
+    const accessErrors = document.querySelector("#access-errors");
+    const notFoundAdminForm = document.querySelector("#not-found-admin-form");
+    const notFoundAdminPassword = document.querySelector("#not-found-admin-password");
+    const notFoundAdminError = document.querySelector("#not-found-admin-error");
+    const notFoundForm = document.querySelector("#not-found-form");
+    const notFoundPassword = document.querySelector("#not-found-password");
+    const notFound = document.querySelector("#not-found");
+    const notFoundErrors = document.querySelector("#not-found-errors");
+    const failedAttemptsKey = "funabashiPasswordFailedAttempts";
+    let failedAttempts = Math.min(10, Math.max(0, Number(sessionStorage.getItem(failedAttemptsKey)) || 0));
+
+    function appendError(list, attempt) {
+      const item = document.createElement("li");
+      item.textContent = `パスワードが違います（${attempt}回目）。もう一度入力してください。`;
+      list.append(item);
+    }
+
+    function showNotFound() {
+      accessGate.hidden = true;
+      siteContent.hidden = true;
+      notFound.hidden = false;
+      notFoundAdminForm.hidden = false;
+      notFoundForm.hidden = true;
+      notFoundAdminPassword.value = "";
+      notFoundAdminError.textContent = "";
+      notFoundErrors.replaceChildren();
+      for (let attempt = 1; attempt <= failedAttempts; attempt += 1) {
+        appendError(notFoundErrors, attempt);
+      }
+    }
+
+    function unlockSite() {
+      sessionStorage.removeItem(failedAttemptsKey);
+      failedAttempts = 0;
+      accessErrors.replaceChildren();
+      notFoundErrors.replaceChildren();
+      notFoundAdminError.textContent = "";
+      accessGate.hidden = true;
+      notFound.hidden = true;
+      siteContent.hidden = false;
+      window.scrollTo(0, 0);
+    }
+
+    function handlePasswordSubmit(event, passwordInput) {
+      event.preventDefault();
+      if (passwordInput.value !== "2784") {
+        failedAttempts += 1;
+        sessionStorage.setItem(failedAttemptsKey, String(failedAttempts));
+        appendError(accessErrors, failedAttempts);
+        passwordInput.select();
+        if (failedAttempts >= 10) showNotFound();
+        return;
+      }
+
+      unlockSite();
+    }
+
+    for (let attempt = 1; attempt <= Math.min(failedAttempts, 9); attempt += 1) {
+      appendError(accessErrors, attempt);
+    }
+
+    if (failedAttempts >= 10) {
+      showNotFound();
+    }
+
+    accessForm.addEventListener("submit", (event) => {
+      handlePasswordSubmit(event, accessPassword);
+    });
+
+    notFoundAdminForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+      if (notFoundAdminPassword.value !== "ick2522010") {
+        notFoundAdminError.textContent = "管理者用パスワードが違います。";
+        notFoundAdminPassword.select();
+        return;
+      }
+
+      notFoundAdminError.textContent = "";
+      notFoundAdminPassword.value = "";
+      notFoundAdminForm.hidden = true;
+      notFoundForm.hidden = false;
+      notFoundPassword.focus();
+    });
+
+    notFoundForm.addEventListener("submit", (event) => {
+      handlePasswordSubmit(event, notFoundPassword);
+    });
   </script>
 </body>
 </html>
