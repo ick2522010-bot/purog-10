@@ -1,0 +1,820 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="千葉県船橋市の自然、歴史、おでかけスポットを紹介。気になる場所を探して、詳しい情報や地図をチェックできます。">
+  <title>ふなばし日和｜船橋のおすすめスポット</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #20342f;
+      --muted: #65756e;
+      --green: #2f6855;
+      --green-dark: #214b3d;
+      --cream: #f7f6ef;
+      --line: #e7e9df;
+      --white: #fff;
+      --shadow: 0 16px 40px rgb(36 57 45 / 8%);
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      background: var(--cream);
+      color: var(--ink);
+      font-family: "Noto Sans JP", "Yu Gothic", "Hiragino Kaku Gothic ProN", sans-serif;
+      line-height: 1.75;
+    }
+
+    button, input { font: inherit; }
+    a { color: inherit; }
+
+    .topbar {
+      position: sticky;
+      z-index: 5;
+      top: 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      padding: 14px max(5vw, calc((100vw - 1180px) / 2));
+      border-bottom: 1px solid rgb(231 233 223 / 85%);
+      background: rgb(255 255 255 / 92%);
+      backdrop-filter: blur(12px);
+    }
+
+    .brand {
+      color: var(--green-dark);
+      font-size: 1.15rem;
+      font-weight: 850;
+      letter-spacing: .04em;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .brand span { margin-right: 7px; }
+
+    .topbar nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 24px;
+      color: var(--muted);
+      font-size: .88rem;
+    }
+
+    .topbar nav a { text-decoration: none; }
+    .topbar nav a:hover { color: var(--green); }
+
+    .hero {
+      position: relative;
+      display: grid;
+      min-height: 490px;
+      overflow: hidden;
+      align-items: center;
+      background:
+        radial-gradient(ellipse at 82% 22%, rgb(255 239 186 / 86%) 0 8%, transparent 8.5%),
+        linear-gradient(168deg, transparent 0 56%, rgb(255 255 255 / 35%) 56.2% 57%, transparent 57.2%),
+        linear-gradient(175deg, #d9eee2 0%, #c1e1dc 47%, #87c2bb 48%, #4f928b 100%);
+    }
+
+    .hero::before, .hero::after {
+      position: absolute;
+      right: -4%;
+      bottom: 0;
+      left: 36%;
+      height: 43%;
+      border-radius: 50% 50% 0 0 / 18% 18% 0 0;
+      background: rgb(47 104 85 / 24%);
+      content: "";
+      transform: rotate(-4deg);
+    }
+
+    .hero::after {
+      right: 34%;
+      left: -9%;
+      height: 29%;
+      background: rgb(255 255 255 / 20%);
+      transform: rotate(4deg);
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 1;
+      width: min(1120px, 90%);
+      margin: 0 auto;
+      padding: 78px 0 90px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0 0 16px;
+      color: var(--green-dark);
+      font-size: .83rem;
+      font-weight: 750;
+      letter-spacing: .12em;
+    }
+
+    .eyebrow::before {
+      width: 25px;
+      height: 2px;
+      background: currentColor;
+      content: "";
+    }
+
+    h1 {
+      max-width: 650px;
+      margin: 0;
+      font-size: clamp(2.6rem, 6vw, 5rem);
+      font-weight: 850;
+      letter-spacing: .04em;
+      line-height: 1.25;
+    }
+
+    h1 span { color: var(--green); }
+
+    .hero-copy {
+      max-width: 530px;
+      margin: 20px 0 28px;
+      color: #3c5a50;
+      font-size: 1.02rem;
+    }
+
+    .hero-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 19px;
+      border-radius: 999px;
+      background: var(--green-dark);
+      color: var(--white);
+      font-size: .92rem;
+      font-weight: 750;
+      text-decoration: none;
+      transition: transform .2s, background .2s;
+    }
+
+    .hero-link:hover { background: var(--green); transform: translateY(-2px); }
+
+    .hero-stamp {
+      position: absolute;
+      right: 6%;
+      bottom: 12%;
+      display: grid;
+      width: 142px;
+      height: 142px;
+      place-content: center;
+      border: 1px solid rgb(255 255 255 / 72%);
+      border-radius: 50%;
+      background: rgb(255 255 255 / 45%);
+      color: var(--green-dark);
+      font-size: .82rem;
+      font-weight: 750;
+      line-height: 1.6;
+      text-align: center;
+      transform: rotate(8deg);
+    }
+
+    .hero-stamp strong { font-size: 1.45rem; }
+
+    main { padding: 0 5vw 76px; }
+
+    .intro {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(220px, .55fr);
+      gap: 48px;
+      align-items: center;
+      width: min(1040px, 100%);
+      margin: 0 auto;
+      padding: 68px 0 56px;
+    }
+
+    .section-label {
+      margin: 0 0 8px;
+      color: var(--green);
+      font-size: .78rem;
+      font-weight: 800;
+      letter-spacing: .14em;
+    }
+
+    .intro h2, .section-heading h2 {
+      margin: 0;
+      font-size: clamp(1.7rem, 3.2vw, 2.45rem);
+      letter-spacing: .025em;
+      line-height: 1.4;
+    }
+
+    .intro p:last-child {
+      margin: 14px 0 0;
+      color: var(--muted);
+    }
+
+    .intro-note {
+      padding: 21px 23px;
+      border-left: 3px solid #82ad91;
+      border-radius: 0 14px 14px 0;
+      background: #edf1e8;
+      color: #52665c;
+      font-size: .9rem;
+    }
+
+    .intro-note strong {
+      display: block;
+      margin-bottom: 4px;
+      color: var(--green-dark);
+      font-size: 1rem;
+    }
+
+    .spots-section {
+      width: min(1180px, 100%);
+      margin: 0 auto;
+      scroll-margin-top: 85px;
+    }
+
+    .section-heading {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 22px;
+      margin-bottom: 23px;
+    }
+
+    .result-count {
+      margin: 0 0 5px;
+      color: var(--muted);
+      font-size: .88rem;
+      white-space: nowrap;
+    }
+
+    .result-count strong { color: var(--green-dark); font-size: 1.25rem; }
+
+    .controls {
+      display: grid;
+      grid-template-columns: minmax(180px, 260px) 1fr;
+      gap: 14px;
+      align-items: center;
+      margin-bottom: 25px;
+    }
+
+    .search-wrap { position: relative; }
+
+    .search-wrap span {
+      position: absolute;
+      top: 50%;
+      left: 14px;
+      color: #718078;
+      pointer-events: none;
+      transform: translateY(-50%);
+    }
+
+    .search-wrap input {
+      width: 100%;
+      min-height: 46px;
+      padding: 10px 14px 10px 39px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      outline: none;
+      background: var(--white);
+      color: var(--ink);
+    }
+
+    .search-wrap input:focus { border-color: #77a18c; box-shadow: 0 0 0 3px rgb(119 161 140 / 16%); }
+
+    .filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .filter-button {
+      padding: 9px 15px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--white);
+      color: #53645b;
+      cursor: pointer;
+      font-size: .84rem;
+      transition: background .18s, color .18s, border-color .18s;
+    }
+
+    .filter-button:hover, .filter-button[aria-pressed="true"] {
+      border-color: var(--green-dark);
+      background: var(--green-dark);
+      color: var(--white);
+    }
+
+    .spot-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 19px;
+    }
+
+    .spot-card {
+      overflow: hidden;
+      border: 1px solid rgb(231 233 223 / 90%);
+      border-radius: 17px;
+      background: var(--white);
+      box-shadow: 0 5px 18px rgb(36 57 45 / 4%);
+      transition: transform .2s, box-shadow .2s;
+    }
+
+    .spot-card:hover { box-shadow: var(--shadow); transform: translateY(-4px); }
+    .spot-card[hidden] { display: none; }
+
+    .card-art {
+      position: relative;
+      display: grid;
+      min-height: 148px;
+      overflow: hidden;
+      place-items: center;
+      isolation: isolate;
+    }
+
+    .card-art::before, .card-art::after {
+      position: absolute;
+      z-index: -1;
+      right: -12%;
+      bottom: -61%;
+      left: -12%;
+      height: 100%;
+      border-radius: 50%;
+      background: rgb(255 255 255 / 32%);
+      content: "";
+    }
+
+    .card-art::after {
+      right: 40%;
+      bottom: -73%;
+      left: -30%;
+      background: rgb(255 255 255 / 25%);
+    }
+
+    .card-art .emoji {
+      filter: drop-shadow(0 7px 7px rgb(32 52 47 / 14%));
+      font-size: 4rem;
+      transition: transform .25s;
+    }
+
+    .spot-card:hover .emoji { transform: scale(1.09) rotate(-4deg); }
+
+    .art-park { background: linear-gradient(140deg, #d5e9bd, #8dc4a1); }
+    .art-sea { background: linear-gradient(140deg, #c3e6e5, #72b8c2); }
+    .art-shrine { background: linear-gradient(140deg, #f1dfbf, #d9aa81); }
+    .art-shopping { background: linear-gradient(140deg, #f1d8d1, #d9a8b7); }
+    .art-arena { background: linear-gradient(140deg, #d9d7ed, #a5a2cf); }
+    .art-market { background: linear-gradient(140deg, #f1e7bb, #d8c176); }
+    .art-onsen { background: linear-gradient(140deg, #e1d7cb, #b3a493); }
+    .art-museum { background: linear-gradient(140deg, #e9d8bd, #c3a77c); }
+    .art-river { background: linear-gradient(140deg, #cce5d2, #78b49a); }
+    .art-garden { background: linear-gradient(140deg, #dae9c7, #a7bf7f); }
+
+    .card-body { padding: 17px 18px 18px; }
+
+    .card-topline {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .category-tag {
+      padding: 3px 9px;
+      border-radius: 999px;
+      background: #edf2eb;
+      color: var(--green-dark);
+      font-size: .72rem;
+      font-weight: 750;
+    }
+
+    .spot-number { color: #98a39c; font-size: .77rem; letter-spacing: .08em; }
+
+    .card-body h3 {
+      margin: 0;
+      font-size: 1.13rem;
+      line-height: 1.5;
+    }
+
+    .card-body p {
+      min-height: 3.4em;
+      margin: 8px 0 14px;
+      color: var(--muted);
+      font-size: .86rem;
+      line-height: 1.7;
+    }
+
+    .detail-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      color: var(--green);
+      cursor: pointer;
+      font-size: .86rem;
+      font-weight: 800;
+    }
+
+    .detail-button:hover { color: #173d30; }
+    .detail-button span { transition: transform .18s; }
+    .detail-button:hover span { transform: translateX(4px); }
+
+    .empty-state {
+      grid-column: 1 / -1;
+      padding: 45px 20px;
+      border: 1px dashed #cbd4c9;
+      border-radius: 16px;
+      color: var(--muted);
+      text-align: center;
+    }
+
+    .guide {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 25px;
+      align-items: center;
+      width: min(1180px, 100%);
+      margin: 62px auto 0;
+      padding: 30px 34px;
+      border-radius: 19px;
+      background: #e8eee5;
+    }
+
+    .guide h2 { margin: 0 0 5px; font-size: 1.25rem; }
+    .guide p { margin: 0; color: var(--muted); font-size: .9rem; }
+
+    .guide a {
+      padding: 11px 17px;
+      border: 1px solid #b8c9b9;
+      border-radius: 999px;
+      color: var(--green-dark);
+      font-size: .86rem;
+      font-weight: 750;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .guide a:hover { background: var(--white); }
+
+    footer {
+      padding: 22px 5vw;
+      background: #203c32;
+      color: #dce8df;
+      font-size: .8rem;
+      text-align: center;
+    }
+
+    footer p { margin: 0; }
+
+    dialog {
+      width: min(520px, calc(100% - 32px));
+      max-height: min(80vh, 700px);
+      padding: 0;
+      overflow: auto;
+      border: 0;
+      border-radius: 20px;
+      background: var(--white);
+      color: var(--ink);
+      box-shadow: 0 25px 80px rgb(18 39 29 / 25%);
+    }
+
+    dialog::backdrop { background: rgb(21 39 31 / 56%); backdrop-filter: blur(3px); }
+    .dialog-art { display: grid; min-height: 180px; place-items: center; }
+    .dialog-art .emoji { font-size: 5rem; }
+    .dialog-content { padding: 22px 26px 26px; }
+    .dialog-content h2 { margin: 8px 0; font-size: 1.55rem; }
+    .dialog-content p { margin: 0 0 18px; color: var(--muted); }
+
+    .dialog-actions { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+
+    .map-link, .close-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 43px;
+      padding: 9px 15px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      font-size: .87rem;
+      font-weight: 750;
+      text-decoration: none;
+    }
+
+    .map-link { border-color: var(--green-dark); background: var(--green-dark); color: var(--white); }
+    .close-button { background: var(--white); color: var(--muted); cursor: pointer; }
+    .map-link:hover { background: var(--green); }
+    .close-button:hover { background: #f2f4ef; }
+
+    @media (max-width: 850px) {
+      .spot-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .topbar { padding-right: 5vw; padding-left: 5vw; }
+    }
+
+    @media (max-width: 620px) {
+      .topbar { align-items: flex-start; flex-direction: column; gap: 7px; padding-top: 10px; padding-bottom: 10px; }
+      .topbar nav { gap: 18px; font-size: .82rem; }
+      .hero { min-height: 440px; }
+      .hero-inner { padding: 65px 0 75px; }
+      .hero-stamp { right: 2%; bottom: 5%; width: 100px; height: 100px; font-size: .68rem; }
+      .hero-stamp strong { font-size: 1.05rem; }
+      .intro { grid-template-columns: 1fr; gap: 20px; padding: 50px 0 42px; }
+      .section-heading { align-items: flex-start; flex-direction: column; gap: 3px; }
+      .controls { grid-template-columns: 1fr; }
+      .spot-grid { gap: 12px; }
+      .card-art { min-height: 115px; }
+      .card-art .emoji { font-size: 3.2rem; }
+      .card-body { padding: 13px 13px 15px; }
+      .card-body h3 { font-size: 1rem; }
+      .card-body p { min-height: 5.1em; font-size: .8rem; }
+      .guide { grid-template-columns: 1fr; margin-top: 42px; padding: 23px; }
+      .guide a { justify-self: start; }
+    }
+
+    @media (max-width: 380px) {
+      .spot-grid { grid-template-columns: 1fr; }
+      .card-art { min-height: 145px; }
+      .card-body p { min-height: 0; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#" aria-label="ふなばし日和 トップ"><span aria-hidden="true">🌿</span>ふなばし日和</a>
+    <nav aria-label="メインナビゲーション">
+      <a href="#about">船橋のこと</a>
+      <a href="#spots">おすすめスポット</a>
+      <a href="#guide">おでかけのヒント</a>
+    </nav>
+  </header>
+
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="hero-inner">
+      <p class="eyebrow">CHIBA · FUNABASHI</p>
+      <h1 id="hero-title">今日は、<br><span>船橋さんぽ。</span></h1>
+      <p class="hero-copy">海辺の自然から、まちの歴史やにぎわいまで。<br>知るほど楽しい船橋のお気に入りを見つけよう。</p>
+      <a class="hero-link" href="#spots">おすすめを見つける <span aria-hidden="true">↓</span></a>
+    </div>
+    <div class="hero-stamp" aria-hidden="true">海も、まちも。<br><strong>ふなばし</strong><br>のんびり日和</div>
+  </section>
+
+  <main>
+    <section class="intro" id="about" aria-labelledby="about-title">
+      <div>
+        <p class="section-label">ABOUT FUNABASHI</p>
+        <h2 id="about-title">暮らしのそばに、<br>いろんな「好き」がある。</h2>
+        <p>千葉県北西部にある船橋市。東京湾の自然、季節を感じる公園、長く親しまれてきた神社や市場など、気分に合わせて楽しめる場所がそろっています。いつものおでかけにも、初めての街歩きにも。</p>
+      </div>
+      <aside class="intro-note">
+        <strong>気分で選んで、気軽におでかけ。</strong>
+        カテゴリで絞り込んだり、キーワードで探したり。気になるスポットを開くと、紹介と地図を確認できます。
+      </aside>
+    </section>
+
+    <section class="spots-section" id="spots" aria-labelledby="spots-title">
+      <div class="section-heading">
+        <div>
+          <p class="section-label">FUNABASHI SPOT GUIDE</p>
+          <h2 id="spots-title">船橋のおすすめスポット</h2>
+        </div>
+        <p class="result-count" aria-live="polite"><strong id="result-count">10</strong> か所を紹介</p>
+      </div>
+
+      <div class="controls">
+        <label class="search-wrap">
+          <span aria-hidden="true">⌕</span>
+          <input id="spot-search" type="search" placeholder="スポット名・キーワードで検索" aria-label="スポットを検索">
+        </label>
+        <div class="filters" role="group" aria-label="カテゴリで絞り込む">
+          <button class="filter-button" type="button" data-filter="all" aria-pressed="true">すべて</button>
+          <button class="filter-button" type="button" data-filter="nature" aria-pressed="false">自然・公園</button>
+          <button class="filter-button" type="button" data-filter="culture" aria-pressed="false">歴史・文化</button>
+          <button class="filter-button" type="button" data-filter="leisure" aria-pressed="false">おでかけ</button>
+          <button class="filter-button" type="button" data-filter="food" aria-pressed="false">食・市場</button>
+        </div>
+      </div>
+
+      <div class="spot-grid" id="spot-grid" aria-live="polite"></div>
+    </section>
+
+    <section class="guide" id="guide" aria-labelledby="guide-title">
+      <div>
+        <h2 id="guide-title">おでかけ前に、最新情報をチェック</h2>
+        <p>営業時間や休園日、イベント情報は変更されることがあります。各施設の公式案内をご確認ください。</p>
+      </div>
+      <a href="https://www.city.funabashi.lg.jp/" target="_blank" rel="noopener noreferrer">船橋市公式サイト ↗</a>
+    </section>
+  </main>
+
+  <footer>
+    <p>ふなばし日和 · 千葉県船橋市のおでかけスポット紹介</p>
+  </footer>
+
+  <dialog id="spot-dialog" aria-labelledby="dialog-title">
+    <div class="dialog-art" id="dialog-art" aria-hidden="true"></div>
+    <div class="dialog-content">
+      <span class="category-tag" id="dialog-category"></span>
+      <h2 id="dialog-title"></h2>
+      <p id="dialog-description"></p>
+      <div class="dialog-actions">
+        <a class="map-link" id="dialog-map" href="#" target="_blank" rel="noopener noreferrer">地図で場所を見る ↗</a>
+        <button class="close-button" id="dialog-close" type="button">閉じる</button>
+      </div>
+    </div>
+  </dialog>
+
+  <script>
+    const spots = [
+      {
+        name: "ふなばしアンデルセン公園",
+        category: "nature",
+        categoryLabel: "自然・公園",
+        emoji: "🌷",
+        art: "art-park",
+        summary: "花や緑、遊具に出会える、家族のおでかけにも人気の公園。",
+        description: "四季折々の花や自然の景色を楽しみながら、園内をゆっくり散策できます。遊具や体験施設もあり、子どもから大人まで一日を過ごせるスポットです。開園日や施設の利用情報は公式サイトでご確認ください。",
+        mapQuery: "ふなばしアンデルセン公園"
+      },
+      {
+        name: "ふなばし三番瀬海浜公園",
+        category: "nature",
+        categoryLabel: "自然・公園",
+        emoji: "🐚",
+        art: "art-sea",
+        summary: "東京湾の干潟と空を感じる、海辺の自然スポット。",
+        description: "東京湾に面した海辺の公園。潮干狩りのシーズンや、三番瀬の生きもの・景色を楽しみたい日におすすめです。潮の状況や利用期間によって楽しみ方が変わるため、お出かけ前に施設の案内をご確認ください。",
+        mapQuery: "ふなばし三番瀬海浜公園"
+      },
+      {
+        name: "船橋大神宮（意富比神社）",
+        category: "culture",
+        categoryLabel: "歴史・文化",
+        emoji: "⛩️",
+        art: "art-shrine",
+        summary: "船橋のまちに根づく、歴史ある神社でひと休み。",
+        description: "船橋大神宮の名で親しまれている意富比神社。境内を歩けば、まちの歴史や落ち着いた空気にふれることができます。参拝の作法や祭事については、神社の案内をご確認ください。",
+        mapQuery: "船橋大神宮"
+      },
+      {
+        name: "ららぽーとTOKYO-BAY",
+        category: "leisure",
+        categoryLabel: "おでかけ",
+        emoji: "🛍️",
+        art: "art-shopping",
+        summary: "ショッピングや食事をまとめて楽しめる大型商業施設。",
+        description: "たくさんのお店や飲食店が集まり、買い物から食事まで一度に楽しめます。映画やイベントなど、その日の気分に合わせた過ごし方を見つけてみてください。営業時間やアクセスは公式サイトでご確認ください。",
+        mapQuery: "ららぽーとTOKYO-BAY"
+      },
+      {
+        name: "LaLa arena TOKYO-BAY",
+        category: "leisure",
+        categoryLabel: "おでかけ",
+        emoji: "🏟️",
+        art: "art-arena",
+        summary: "スポーツや音楽イベントで盛り上がる、船橋の新しいアリーナ。",
+        description: "スポーツの試合やコンサートなど、多彩なイベントが開かれるアリーナです。イベントの開催日には周辺の混雑が予想されます。公演情報、入場方法、交通案内は主催者や施設の公式情報をご確認ください。",
+        mapQuery: "LaLa arena TOKYO-BAY"
+      },
+      {
+        name: "船橋市地方卸売市場",
+        category: "food",
+        categoryLabel: "食・市場",
+        emoji: "🐟",
+        art: "art-market",
+        summary: "船橋の食を支える市場。場内のお店や催しもチェック。",
+        description: "船橋の食を支える卸売市場です。市場ならではの活気や食の魅力にふれられます。一般の方向けの営業やイベントは日によって異なる場合があります。見学・利用の前に公式案内をご確認ください。",
+        mapQuery: "船橋市地方卸売市場"
+      },
+      {
+        name: "船橋温泉 湯楽の里",
+        category: "leisure",
+        categoryLabel: "おでかけ",
+        emoji: "♨️",
+        art: "art-onsen",
+        summary: "お風呂や休憩で、ゆったりリフレッシュしたい日に。",
+        description: "お風呂や休憩スペースでゆっくり過ごせる温浴施設です。おでかけや仕事帰りに、ひと息つきたいときにぴったり。営業時間、利用料金、設備は変更されることがあるため、施設の公式案内をご確認ください。",
+        mapQuery: "船橋温泉 湯楽の里"
+      },
+      {
+        name: "船橋市郷土資料館",
+        category: "culture",
+        categoryLabel: "歴史・文化",
+        emoji: "🏺",
+        art: "art-museum",
+        summary: "展示を通して、船橋の歴史や人々の暮らしを知る。",
+        description: "地域の歴史や文化について学べる資料館です。展示を見ながら、今の船橋につながる昔の暮らしやまちの変化を知ることができます。開館日や展示内容は公式案内でご確認ください。",
+        mapQuery: "船橋市郷土資料館"
+      },
+      {
+        name: "海老川ジョギングロード",
+        category: "nature",
+        categoryLabel: "自然・公園",
+        emoji: "🌸",
+        art: "art-river",
+        summary: "川沿いを歩いて季節を感じる、身近な散歩道。",
+        description: "海老川沿いに続く、散歩やジョギングに親しまれている道です。春には桜を楽しめる場所としても知られています。歩きやすい靴で、川辺の景色や季節の移り変わりをのんびり楽しんでみてください。",
+        mapQuery: "海老川ジョギングロード 船橋"
+      },
+      {
+        name: "行田公園",
+        category: "nature",
+        categoryLabel: "自然・公園",
+        emoji: "🌳",
+        art: "art-garden",
+        summary: "広々とした緑の中で、散歩やピクニックを楽しめる公園。",
+        description: "緑に囲まれて、散歩や休憩を楽しめる公園です。季節の景色を眺めながら、家族や友人とのんびり過ごしたい日におすすめ。公園内の施設や利用案内は船橋市の公式情報をご確認ください。",
+        mapQuery: "行田公園 船橋"
+      }
+    ];
+
+    const grid = document.querySelector("#spot-grid");
+    const searchInput = document.querySelector("#spot-search");
+    const resultCount = document.querySelector("#result-count");
+    const dialog = document.querySelector("#spot-dialog");
+    let activeFilter = "all";
+
+    function renderSpots() {
+      grid.innerHTML = spots.map((spot, index) => `
+        <article class="spot-card" data-category="${spot.category}" data-search="${spot.name} ${spot.summary} ${spot.categoryLabel}">
+          <div class="card-art ${spot.art}" aria-hidden="true"><span class="emoji">${spot.emoji}</span></div>
+          <div class="card-body">
+            <div class="card-topline">
+              <span class="category-tag">${spot.categoryLabel}</span>
+              <span class="spot-number">SPOT ${String(index + 1).padStart(2, "0")}</span>
+            </div>
+            <h3>${spot.name}</h3>
+            <p>${spot.summary}</p>
+            <button class="detail-button" type="button" data-spot-index="${index}" aria-label="${spot.name}の詳しい紹介を開く">
+              詳しく見る <span aria-hidden="true">→</span>
+            </button>
+          </div>
+        </article>
+      `).join("");
+      filterSpots();
+    }
+
+    function filterSpots() {
+      const query = searchInput.value.trim().toLocaleLowerCase("ja");
+      const cards = grid.querySelectorAll(".spot-card");
+      let visibleCount = 0;
+
+      cards.forEach((card) => {
+        const categoryMatches = activeFilter === "all" || card.dataset.category === activeFilter;
+        const searchMatches = card.dataset.search.toLocaleLowerCase("ja").includes(query);
+        const visible = categoryMatches && searchMatches;
+        card.hidden = !visible;
+        if (visible) visibleCount += 1;
+      });
+
+      grid.querySelector(".empty-state")?.remove();
+      if (visibleCount === 0) {
+        grid.insertAdjacentHTML("beforeend", '<p class="empty-state">見つかりませんでした。別のキーワードやカテゴリをお試しください。</p>');
+      }
+      resultCount.textContent = String(visibleCount);
+    }
+
+    document.querySelector(".filters").addEventListener("click", (event) => {
+      const button = event.target.closest("[data-filter]");
+      if (!button) return;
+      activeFilter = button.dataset.filter;
+      document.querySelectorAll(".filter-button").forEach((filterButton) => {
+        filterButton.setAttribute("aria-pressed", String(filterButton === button));
+      });
+      filterSpots();
+    });
+
+    searchInput.addEventListener("input", filterSpots);
+
+    grid.addEventListener("click", (event) => {
+      const button = event.target.closest("[data-spot-index]");
+      if (!button) return;
+      const spot = spots[Number(button.dataset.spotIndex)];
+      if (!spot) return;
+
+      document.querySelector("#dialog-art").className = `dialog-art ${spot.art}`;
+      document.querySelector("#dialog-art").innerHTML = `<span class="emoji">${spot.emoji}</span>`;
+      document.querySelector("#dialog-category").textContent = spot.categoryLabel;
+      document.querySelector("#dialog-title").textContent = spot.name;
+      document.querySelector("#dialog-description").textContent = spot.description;
+      document.querySelector("#dialog-map").href = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(spot.mapQuery)}`;
+      dialog.showModal();
+    });
+
+    document.querySelector("#dialog-close").addEventListener("click", () => dialog.close());
+    dialog.addEventListener("click", (event) => {
+      if (event.target === dialog) dialog.close();
+    });
+
+    renderSpots();
+  </script>
+</body>
+</html>
