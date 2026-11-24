@@ -167,30 +167,11 @@
       overflow: hidden;
       align-items: center;
       background:
-        radial-gradient(ellipse at 82% 22%, rgb(255 239 186 / 86%) 0 8%, transparent 8.5%),
-        linear-gradient(168deg, transparent 0 56%, rgb(255 255 255 / 35%) 56.2% 57%, transparent 57.2%),
-        linear-gradient(175deg, #d9eee2 0%, #c1e1dc 47%, #87c2bb 48%, #4f928b 100%);
+        linear-gradient(90deg, rgb(247 246 239 / 96%) 0%, rgb(247 246 239 / 88%) 38%, rgb(247 246 239 / 18%) 68%, rgb(247 246 239 / 5%) 100%),
+        url("images/park.jpg") center 58% / cover no-repeat;
     }
 
-    .hero::before, .hero::after {
-      position: absolute;
-      right: -4%;
-      bottom: 0;
-      left: 36%;
-      height: 43%;
-      border-radius: 50% 50% 0 0 / 18% 18% 0 0;
-      background: rgb(47 104 85 / 24%);
-      content: "";
-      transform: rotate(-4deg);
-    }
-
-    .hero::after {
-      right: 34%;
-      left: -9%;
-      height: 29%;
-      background: rgb(255 255 255 / 20%);
-      transform: rotate(4deg);
-    }
+    .hero::before, .hero::after { display: none; }
 
     .hero-inner {
       position: relative;
@@ -448,24 +429,7 @@
       line-height: 1.5;
     }
 
-    .card-art::before, .card-art::after {
-      position: absolute;
-      z-index: -1;
-      right: -12%;
-      bottom: -61%;
-      left: -12%;
-      height: 100%;
-      border-radius: 50%;
-      background: rgb(255 255 255 / 32%);
-      content: "";
-    }
-
-    .card-art::after {
-      right: 40%;
-      bottom: -73%;
-      left: -30%;
-      background: rgb(255 255 255 / 25%);
-    }
+    .card-art::before, .card-art::after { display: none; }
 
     .card-art .emoji {
       filter: drop-shadow(0 7px 7px rgb(32 52 47 / 14%));
@@ -606,7 +570,7 @@
 
     .dialog-actions { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
 
-    .map-link, .close-button {
+    .map-link, .official-link, .close-button {
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -620,8 +584,10 @@
     }
 
     .map-link { border-color: var(--green-dark); background: var(--green-dark); color: var(--white); }
+    .official-link { background: var(--white); color: var(--green-dark); }
     .close-button { background: var(--white); color: var(--muted); cursor: pointer; }
     .map-link:hover { background: var(--green); }
+    .official-link:hover { background: #f2f4ef; }
     .close-button:hover { background: #f2f4ef; }
 
     @media (max-width: 850px) {
@@ -723,7 +689,7 @@
       </div>
       <aside class="intro-note">
         <strong>気分で選んで、気軽におでかけ。</strong>
-        カテゴリで絞り込んだり、キーワードで探したり。気になるスポットを開くと、紹介と地図を確認できます。
+        カテゴリで絞り込んだり、キーワードで探したり。気になるスポットを開くと、紹介や地図、公式サイトを確認できます。
       </aside>
     </section>
 
@@ -764,7 +730,7 @@
 
   <footer>
     <p>ふなばし日和 · 千葉県船橋市のおでかけスポット紹介</p>
-    <p>写真: <a href="https://unsplash.com/license" target="_blank" rel="noopener noreferrer">Unsplash License</a> · 各スポットの現地写真ではなくイメージです</p>
+    <p>写真: <a href="https://commons.wikimedia.org/" target="_blank" rel="noopener noreferrer">Wikimedia Commons</a></p>
   </footer>
 
   <dialog id="spot-dialog" aria-labelledby="dialog-title">
@@ -775,6 +741,7 @@
       <p id="dialog-description"></p>
       <div class="dialog-actions">
         <a class="map-link" id="dialog-map" href="#" target="_blank" rel="noopener noreferrer">地図で場所を見る ↗</a>
+        <a class="official-link" id="dialog-website" href="#" target="_blank" rel="noopener noreferrer">公式サイトを見る ↗</a>
         <button class="close-button" id="dialog-close" type="button">閉じる</button>
       </div>
     </div>
@@ -791,7 +758,8 @@
         art: "art-park",
         summary: "花や緑、遊具に出会える、家族のおでかけにも人気の公園。",
         description: "四季折々の花や自然の景色を楽しみながら、園内をゆっくり散策できます。遊具や体験施設もあり、子どもから大人まで一日を過ごせるスポットです。開園日や施設の利用情報は公式サイトでご確認ください。",
-        mapQuery: "ふなばしアンデルセン公園"
+        mapQuery: "ふなばしアンデルセン公園",
+        websiteUrl: "https://www.park-funabashi.or.jp/and/"
       },
       {
         name: "ふなばし三番瀬海浜公園",
@@ -802,7 +770,8 @@
         art: "art-sea",
         summary: "東京湾の干潟と空を感じる、海辺の自然スポット。",
         description: "東京湾に面した海辺の公園。潮干狩りのシーズンや、三番瀬の生きもの・景色を楽しみたい日におすすめです。潮の状況や利用期間によって楽しみ方が変わるため、お出かけ前に施設の案内をご確認ください。",
-        mapQuery: "ふなばし三番瀬海浜公園"
+        mapQuery: "ふなばし三番瀬海浜公園",
+        websiteUrl: "https://www.sambanze.jp/"
       },
       {
         name: "船橋大神宮（意富比神社）",
@@ -813,7 +782,8 @@
         art: "art-shrine",
         summary: "船橋のまちに根づく、歴史ある神社でひと休み。",
         description: "船橋大神宮の名で親しまれている意富比神社。境内を歩けば、まちの歴史や落ち着いた空気にふれることができます。参拝の作法や祭事については、神社の案内をご確認ください。",
-        mapQuery: "船橋大神宮"
+        mapQuery: "船橋大神宮",
+        websiteUrl: "http://www.oohijinja.jp/"
       },
       {
         name: "ららぽーとTOKYO-BAY",
@@ -824,7 +794,8 @@
         art: "art-shopping",
         summary: "ショッピングや食事をまとめて楽しめる大型商業施設。",
         description: "たくさんのお店や飲食店が集まり、買い物から食事まで一度に楽しめます。映画やイベントなど、その日の気分に合わせた過ごし方を見つけてみてください。営業時間やアクセスは公式サイトでご確認ください。",
-        mapQuery: "ららぽーとTOKYO-BAY"
+        mapQuery: "ららぽーとTOKYO-BAY",
+        websiteUrl: "https://mitsui-shopping-park.com/lalaport/tokyo-bay/"
       },
       {
         name: "LaLa arena TOKYO-BAY",
@@ -835,7 +806,8 @@
         art: "art-arena",
         summary: "スポーツや音楽イベントで盛り上がる、船橋の新しいアリーナ。",
         description: "スポーツの試合やコンサートなど、多彩なイベントが開かれるアリーナです。イベントの開催日には周辺の混雑が予想されます。公演情報、入場方法、交通案内は主催者や施設の公式情報をご確認ください。",
-        mapQuery: "LaLa arena TOKYO-BAY"
+        mapQuery: "LaLa arena TOKYO-BAY",
+        websiteUrl: "https://lalaarenatokyo-bay.com/"
       },
       {
         name: "船橋市地方卸売市場",
@@ -846,7 +818,8 @@
         art: "art-market",
         summary: "船橋の食を支える市場。場内のお店や催しもチェック。",
         description: "船橋の食を支える卸売市場です。市場ならではの活気や食の魅力にふれられます。一般の方向けの営業やイベントは日によって異なる場合があります。見学・利用の前に公式案内をご確認ください。",
-        mapQuery: "船橋市地方卸売市場"
+        mapQuery: "船橋市地方卸売市場",
+        websiteUrl: "https://funabashi-ichiba.jp/"
       },
       {
         name: "船橋温泉 湯楽の里",
@@ -857,7 +830,8 @@
         art: "art-onsen",
         summary: "お風呂や休憩で、ゆったりリフレッシュしたい日に。",
         description: "お風呂や休憩スペースでゆっくり過ごせる温浴施設です。おでかけや仕事帰りに、ひと息つきたいときにぴったり。営業時間、利用料金、設備は変更されることがあるため、施設の公式案内をご確認ください。",
-        mapQuery: "船橋温泉 湯楽の里"
+        mapQuery: "船橋温泉 湯楽の里",
+        websiteUrl: "https://www.yurakirari.com/funabashi/"
       },
       {
         name: "船橋市郷土資料館",
@@ -868,7 +842,8 @@
         art: "art-museum",
         summary: "展示を通して、船橋の歴史や人々の暮らしを知る。",
         description: "地域の歴史や文化について学べる資料館です。展示を見ながら、今の船橋につながる昔の暮らしやまちの変化を知ることができます。開館日や展示内容は公式案内でご確認ください。",
-        mapQuery: "船橋市郷土資料館"
+        mapQuery: "船橋市郷土資料館",
+        websiteUrl: "https://www.city.funabashi.lg.jp/shisetsu/bunka/0001/0005/0001/p011081.html"
       },
       {
         name: "海老川ジョギングロード",
@@ -879,7 +854,8 @@
         art: "art-river",
         summary: "川沿いを歩いて季節を感じる、身近な散歩道。",
         description: "海老川沿いに続く、散歩やジョギングに親しまれている道です。春には桜を楽しめる場所としても知られています。歩きやすい靴で、川辺の景色や季節の移り変わりをのんびり楽しんでみてください。",
-        mapQuery: "海老川ジョギングロード 船橋"
+        mapQuery: "海老川ジョギングロード 船橋",
+        websiteUrl: "https://maruchiba.jp/spot/detail_10495.html"
       },
       {
         name: "行田公園",
@@ -890,7 +866,8 @@
         art: "art-garden",
         summary: "広々とした緑の中で、散歩やピクニックを楽しめる公園。",
         description: "緑に囲まれて、散歩や休憩を楽しめる公園です。季節の景色を眺めながら、家族や友人とのんびり過ごしたい日におすすめ。公園内の施設や利用案内は船橋市の公式情報をご確認ください。",
-        mapQuery: "行田公園 船橋"
+        mapQuery: "行田公園 船橋",
+        websiteUrl: "https://www.pref.chiba.lg.jp/kouen/toshikouen/guidemap/gyouda.html"
       }
     ];
 
@@ -904,8 +881,7 @@
       grid.innerHTML = spots.map((spot, index) => `
         <article class="spot-card" data-category="${spot.category}" data-search="${spot.name} ${spot.summary} ${spot.categoryLabel}">
           <div class="card-art ${spot.art}" aria-hidden="true">
-            <img src="${spot.image}" alt="" loading="lazy" decoding="async">
-            <span class="photo-badge">イメージ</span>
+            <img src="${spot.image}" alt="${spot.name}の写真" loading="lazy" decoding="async">
           </div>
           <div class="card-body">
             <div class="card-topline">
@@ -962,11 +938,12 @@
       if (!spot) return;
 
       document.querySelector("#dialog-art").className = `dialog-art ${spot.art}`;
-      document.querySelector("#dialog-art").innerHTML = `<img src="${spot.image}" alt=""><span class="photo-badge">イメージ</span>`;
+      document.querySelector("#dialog-art").innerHTML = `<img src="${spot.image}" alt="${spot.name}の写真">`;
       document.querySelector("#dialog-category").textContent = spot.categoryLabel;
       document.querySelector("#dialog-title").textContent = spot.name;
       document.querySelector("#dialog-description").textContent = spot.description;
       document.querySelector("#dialog-map").href = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(spot.mapQuery)}`;
+      document.querySelector("#dialog-website").href = spot.websiteUrl;
       dialog.showModal();
     });
 
